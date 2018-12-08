@@ -4,8 +4,10 @@
         <p>后台业务管理系统</p>
         <el-input class="login-input" placeholder="请输入用户名称" v-model="username" clearable></el-input>
         <el-input class="login-input" placeholder="请输入登录密码" v-model="password" clearable></el-input>
-        <div class="error-tip"></div>
-        <el-button class="login-btn">登录</el-button>
+        <div class="error-wrapper">
+            <div class="error-tip" v-show="errorShow"><i class="iconfont">&#xe60e;</i>&nbsp;&nbsp;{{errorMessage}}</div>
+        </div>
+        <el-button class="login-btn" @click="handleLogin">登录</el-button>
     </div>
   </div>
 </template>
@@ -16,8 +18,21 @@ export default {
   data () {
       return {
           username: '',
-          password: ''
+          password: '',
+          errorMessage: '',
+          errorShow: false
       }
+  },
+  methods: {
+    handleLogin () {
+        if (this.username == '') {
+            this.errorMessage = '请填写用户名称';
+            this.errorShow = true;
+        } else if (this.password == '') {
+            this.errorMessage = '请填写登录密码';
+            this.errorShow = true;
+        }
+    }
   }
 }
 </script>
@@ -47,11 +62,19 @@ export default {
                     border-radius: 8px;
                     height: 60px;
                     border: none;
+                    font-size: 16px;
                 }
             }
-           .error-tip {
+           .error-wrapper {
                height: 50px;
-               background: #9de2e1;
+               .error-tip {
+                    line-height: 50px;
+                    background: #9de2e1;
+                    text-align: center;
+                    color: #fff;
+                    font-size: 18px;
+                    border-radius: 10px;
+               }
            }
            .el-button--default {
                width: 100%;
