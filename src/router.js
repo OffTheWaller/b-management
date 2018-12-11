@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/home/Home.vue'
+import Index from './views/home/Index.vue'
 import Login from './views/login/Login.vue'
 
 Vue.use(Router)
@@ -10,29 +10,45 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/home',
-      name: 'home',
-      component: Home,
+      path: '/',
+      redirect: '/index'
+    },
+    {
+      path: '/index',
+      name: 'index',
+      component: Index,
       children: [
         {
-          path: 'homeSystem',
-          name: 'homeSystem',
-          component: resolve => require(['@/views/home/HomeSystem'],resolve)
+          path: 'systemIndex', //系统首页
+          component: resolve => require(['@/views/home/SystemIndex'], resolve)
         },
         {
-          path: 'accountSetting',
-          name: 'accountSetting',
-          component: resolve => require(['@/views/home/AccountSetting'],resolve)
+          path: 'accountSetting',  //账户设置
+          component: resolve => require(['@/views/home/AccountSetting'], resolve)
         },
         {
-          path: 'systemInfo',
-          name: 'systemInfo',
-          component: resolve => require(['@/views/home/SystemInfo'],resolve)
+          path: 'systemInfo',  //系统信息
+          component: resolve => require(['@/views/home/SystemInfo'], resolve)
         },
         {
-          path: 'loginLog',
-          name: 'loginLog',
-          component: resolve => require(['@/views/home/LoginLog'],resolve)
+          path: 'loginLog',  //登录日志
+          component: resolve => require(['@/views/home/LoginLog'], resolve)
+        },
+        {
+          path: '/goods/list',  //商品列表
+          component: resolve => require(['@/views/goods/goodslist/List'], resolve)
+        },
+        {
+          path: '/goods/add',  //添加商品
+          component: resolve => require(['@/views/goods/goodsadd/Add'], resolve)
+        },
+        {
+          path: '/goods/recycle',  //商品回收站
+          component: resolve => require(['@/views/goods/goodsrecycle/Recycle'], resolve)
+        },
+        {
+          path: '/goods/evaluate',  //商品评价
+          component: resolve => require(['@/views/goods/goodsevaluate/Evaluate'], resolve)
         }
       ]
     },

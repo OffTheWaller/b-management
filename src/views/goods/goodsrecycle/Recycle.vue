@@ -1,10 +1,10 @@
 <template>
-    <div>这是系统首页</div>
+    <div>这是商品回收站页面</div>
 </template>
 
 <script>
 export default {
-    name: 'HomeSystem'
+    name: 'AccountSetting'
 }
 </script>
 
