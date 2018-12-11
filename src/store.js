@@ -20,6 +20,14 @@ export default new Vuex.Store({
               {
                 name: '账户设置',
                 path: '/home/accountSetting'
+              },
+              {
+                name: '系统信息',
+                path: '/home/systemInfo'
+              },
+              {
+                name: '登录日志',
+                path: '/home/loginLog'
               }
             ]
           }
@@ -30,15 +38,44 @@ export default new Vuex.Store({
         path: '/goods/goodsManagement',
         child: [
           {
-            sub: '系统首页',
+            sub: '商品管理',
             menu: [
               {
-                name: '系统首页',
-                path: '/home/homeSystem'
+                name: '商品列表',
+                path: '/goods/goodsList'
               },
               {
-                name: '账户设置',
-                path: '/home/accountSetting'
+                name: '添加商品',
+                path: '/goods/goodsAdd'
+              },
+              {
+                name: '商品回收站',
+                path: '/goods/goodsRecycle'
+              },
+              {
+                name: '商品评价',
+                path: '/goods/goodsEvaluate'
+              }
+            ]
+          },
+          {
+            sub: '商品配置',
+            menu: [
+              {
+                name: '商品分类',
+                path: '/goods/goodsCategory'
+              },
+              {
+                name: '商品类型',
+                path: '/goods/goodsType'
+              },
+              {
+                name: '品牌管理',
+                path: '/goods/brandManagement'
+              },
+              {
+                name: '图片库管理',
+                path: '/goods/imagesManagement'
               }
             ]
           }

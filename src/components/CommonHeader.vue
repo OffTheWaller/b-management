@@ -2,14 +2,18 @@
     <div class="nav-wrapper">
         <div class="logo">LOGO</div>
         <el-menu
-        default-active="1"
+        default-active="/home/homeSystem"
         mode="horizontal"
         @select="handleSelect"
         background-color="#5bc0bf"
         text-color="#fff"
         :router="isRouter"
         >
-            <el-menu-item v-for="item in nav" :index="item.path">首页</el-menu-item>
+            <el-menu-item v-for="(item,index) in nav" 
+            :index="item.path"
+            :key="index"
+            >{{item.title}}
+            </el-menu-item>
             <!-- <el-menu-item index="goods">商品</el-menu-item>
             <el-menu-item index="orders">订单</el-menu-item>
             <el-menu-item index="stores">库存</el-menu-item>
@@ -32,13 +36,13 @@ export default {
     data () {
         return {
             // nav: ['首页','商品','订单','库存','用户','促销','运营','内容','统计','财务','设置','权限']
-            isRouter: false,
+            isRouter: true,
             nav: this.$store.state.nav
         }
     },
     methods: {
-        handleSelect (key, keypath) {
-            console.log(key)
+        handleSelect (key) {
+            this.$emit('choose',key)
             
         }
     }

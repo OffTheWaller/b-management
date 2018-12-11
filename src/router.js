@@ -12,7 +12,29 @@ export default new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: 'homeSystem',
+          name: 'homeSystem',
+          component: resolve => require(['@/views/home/HomeSystem'],resolve)
+        },
+        {
+          path: 'accountSetting',
+          name: 'accountSetting',
+          component: resolve => require(['@/views/home/AccountSetting'],resolve)
+        },
+        {
+          path: 'systemInfo',
+          name: 'systemInfo',
+          component: resolve => require(['@/views/home/SystemInfo'],resolve)
+        },
+        {
+          path: 'loginLog',
+          name: 'loginLog',
+          component: resolve => require(['@/views/home/LoginLog'],resolve)
+        }
+      ]
     },
     {
       path: '/login',
