@@ -74,73 +74,52 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~@/assets/styles/variables.scss';
   .nav {
-    width: 100%;
-    background: #5bc0bf;
-    .nav-wrapper {
-      width: 1634px;
+    height: 90px;
+    background: $theme-color;
+  }
+  .nav-wrapper {
+    width: 1634px;
+    margin: 0 auto;
+    .logo {
+      width: 180px;
+      text-align: center;
       line-height: 90px;
-      margin: 0 auto;
-      .logo {
-        width: 180px;
-        text-align: center;
-        color: #fff;
-        font-size: 36px;
-      }
-      .user-info {
-        width: 326px;
-        height: 90px;
-      }
-      .el-menu {
-        height: 90px;
-        .el-menu-item {
-          width: 80px;
-          height: 90px;
-          line-height: 90px;
-          border: none;
-          text-align: center;
-          font-size: 20px;
-        }
-        .is-active {
-          border: none !important;
-          background: #7ccdcc !important;
-        }
-      }
+      font-size: 38px;
+      color: #fff;
+    }
+    li.el-menu-item {
+      width: 80px;
+      height: 90px;
+      line-height: 90px;
+      text-align: center;
     }
   }
   .main-content {
     width: 1634px;
     margin: 0 auto;
-    .sidebar {
+    .el-aside {
+      width: 260px !important;
+    }
+    .el-main {
+      padding: 0;
+    }
+    .el-menu h5 {
       width: 260px;
-      height: 100%;
-
-      .el-menu {
-        border: none;
-        text-align: center;
-        
-        h5 {
-          height: 60px;
-          line-height: 60px;
-          font-size: 16px;
-          color: #b9b9ba;
-          font-weight: normal;
-          border-bottom: 1px solid #e5e5e5;
-        }
-        .el-menu-item {
-          font-size: 16px;
-          border-bottom: 1px solid #e5e5e5;
-          height: 59px;
-        }
-        .is-active {
-          background: #fff !important;
-          border-bottom: 1px solid #5bc0bf;
-        }
-        .el-menu-item:hover {
-          color: #5bc0bf;
-          background-color: none !important;
-          font-size: 16px;
-        }
+      background: $side-bar;
+      text-align: center;
+      line-height: 60px;
+      color: #bdbdbe;
+      font-size: 18px;
+      font-weight: 400;
+    }
+    .el-menu-item {
+      width: 260px;
+      text-align: center;
+      font-size: 18px;
+      &:hover {
+        color: $theme-color;
       }
     }
   }
