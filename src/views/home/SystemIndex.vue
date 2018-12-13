@@ -39,13 +39,64 @@
                     </div>
                 </div>
             </div>
+            <!-- 待处理区域 -->
+            <panel :title="'待处理事务'">
+                <div class="todo">
+                    <el-row>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">代付款订单</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">已完成订单</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">待确认退货订单</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">待发货订单</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">新缺货登记</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">待处理退款订单</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">已发货订单</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">待处理退货订单</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                        <el-col :span="8" class="todo-item">
+                            <span class="todo-name">广告位即将到期</span>
+                            <p class="fr">( <span class="todo-num">10</span> )</p>
+                        </el-col>
+                    </el-row>
+                </div>
+            </panel>
         </div>
     </div>
 </template>
 
 <script>
+import Panel from '@/components/Panel'
 export default {
-    name: 'SystemIndex'
+    name: 'SystemIndex',
+    components: {
+        Panel
+    }
 }
 </script>
 
@@ -84,6 +135,7 @@ export default {
         padding: 44px;
         width: 1374px;
         box-sizing: border-box;
+        // 四个卡片
         .cards {
             display: flex;
             justify-content: space-between;
@@ -109,6 +161,30 @@ export default {
                     color: $my-red;
                     font-weight: 700;
                 } 
+            }
+        }
+        // 待处理事务
+        .todo {
+            border-left: 1px solid #b5b5b5;
+            .todo-item {
+                border-right: 1px solid #b5b5b5;
+                border-bottom: 1px solid #b5b5b5;
+                height: 60px;
+                padding: 24px 54px 19px 47px;
+                background: #fff;
+                .todo-name {
+                    font-size: 18px;
+                    &:hover {
+                        color: $theme-color;
+                        cursor: pointer;
+                    }
+                }
+                .todo-num {
+                    color: $my-red;
+                    font-size: 18px;
+                    position: relative;
+                    top: 2px;
+                }
             }
         }
     }
