@@ -1,3 +1,12 @@
 $theme-color: #5bc0bf;
 $side-bar: #efefef;
 $my-red: #d23029;
+.my-active {
+    color: $theme-color;
+}
+
+@mixin panel-border {
+  border-left: 1px solid #b5b5b5;
+  border-right: 1px solid #b5b5b5;
+  border-bottom: 1px solid #b5b5b5;
+}

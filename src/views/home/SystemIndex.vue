@@ -86,6 +86,104 @@
                     </el-row>
                 </div>
             </panel>
+            <!-- 运营快捷入口 -->
+            <panel :title="'运营快捷入口'">
+                <div class="entry">
+                    <ul>
+                        <li class="entry-item my-active">
+                            <p class="entry-icon iconfont">&#xe613;</p>
+                            <p class="entry-desc">添加商品</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe6ab;</p>
+                            <p class="entry-desc">订单列表</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe663;</p>
+                            <p class="entry-desc">用户管理</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe62c;</p>
+                            <p class="entry-desc">交易统计</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe6e4;</p>
+                            <p class="entry-desc">短信营销</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe61d;</p>
+                            <p class="entry-desc">广告管理</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe6c2;</p>
+                            <p class="entry-desc">专题管理</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe60c;</p>
+                            <p class="entry-desc">秒杀管理</p>
+                        </li>
+                        <li class="entry-item">
+                            <p class="entry-icon iconfont">&#xe63b;</p>
+                            <p class="entry-desc">首页推荐</p>
+                        </li>
+                    </ul>
+                </div>
+            </panel>
+            <!-- 商品总览、用户总览 -->
+            <div class="overview">
+                <panel :title="'商品总览'" class="over-item">
+                    <div class="product-overview">
+                        <ul class="overview-sub">
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">已下架</p>
+                            </li>
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">已上架</p>
+                            </li>
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">库存紧张</p>
+                            </li>
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">全部商品</p>
+                            </li>
+                        </ul>
+                    </div>
+                </panel>
+                <panel :title="'用户总览'" class="over-item">
+                    <div class="users-overview">
+                        <ul class="overview-sub">
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">今日新增</p>
+                            </li>
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">昨日新增</p>
+                            </li>
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">本月新增</p>
+                            </li>
+                            <li>
+                                <p class="overview-num">100</p>
+                                <p class="overview-desc">会员总数</p>
+                            </li>
+                        </ul>
+                    </div>
+                </panel>
+            </div>
+            <!-- 订单统计 -->
+            <panel :title="'订单统计'">
+                <div class="orders-content">订单统计图</div>
+            </panel>
+            <!-- 销售统计 -->
+            <panel :title="'销售统计'">
+                <div class="sale-content">销售统计图</div>                
+            </panel>
         </div>
     </div>
 </template>
@@ -186,6 +284,65 @@ export default {
                     top: 2px;
                 }
             }
+        }
+        // 运营快捷入口
+        .entry {
+            @include panel-border;
+            padding: 38px;
+            background: #fff;
+            ul {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .entry-item {
+                width: 78px;
+                height: 88px;
+                text-align: center;
+                color: #b6b6b7;
+                &:hover {
+                    color: $theme-color;
+                }
+                .entry-icon {
+                    font-size: 50px;
+                    margin-bottom: 10px;
+                }
+                .entry-desc {
+                    font-size: 18px;
+                }
+            }
+        }
+        //商品总览、用户总览
+        .overview {
+            display: flex;
+            justify-content: space-between;
+            .over-item {
+                width: 614px;
+                .overview-sub {
+                    display: flex;
+                    padding: 50px;
+                    justify-content: space-between;
+                    background: #fff;
+                    @include panel-border;
+                    .overview-num {
+                        color: $my-red;
+                        font-size: 26px;
+                        margin-bottom: 25px;
+                        font-weight: 700;
+                    }
+                    .overview-desc {
+                        font-size: 18px;
+                        color: #646262;
+                    }
+                }
+            }
+        }
+        //订单统计、销售统计
+        .orders-content,
+        .sale-content {
+            height: 372px;
+            background: #fff;
+            @include panel-border;
         }
     }
 </style>
