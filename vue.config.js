@@ -4,6 +4,7 @@ function resolve (dir) {
 }
 module.exports = {
   chainWebpack: config => {
+    //配置别名
     config.resolve.alias
       .set('styles',resolve('src/assets/styles'))
   },
@@ -11,10 +12,11 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://47.107.167.164:8080',
+        ws: true,
+        changeOrigin: true,
         pathRewrite: {
-          //public会作为默认目录，不用写，实际访问的是/public/mock/
-          '^/api': '/mock'
+          '^/api': ''
         }
       }
     }
