@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/utils/axios.js';
 
 
 export default {
@@ -43,10 +43,18 @@ export default {
         this.errorShow = true;
         return;
       }
-      axios.post('/api/merchant/login',this.form, {
+      axios.post('/api/merchant/login',this.form,{
         type: 'form'
       }).then((res) => {
-        console.log(res);
+        res = JSON.stringify(res.data.data);
+        this.$store.commit('SET_USERINFO', res);        
+        this.$message({
+          message: '恭喜您，登录成功',
+          type: 'success'
+        });
+        setTimeout(() => {
+          this.$router.push('/index/systemIndex')
+        }, 800)
       },(err) => {
         console.log(err)
       })

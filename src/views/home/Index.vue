@@ -11,7 +11,7 @@
           background-color="#5bc0bf"
           text-color="#fff"
           active-text-color="#fff"
-          default-active="index"
+          default-active="activeNav"
           >
             <el-menu-item v-for="(item,key) in nav" 
             :key="key"
@@ -60,7 +60,8 @@ export default {
   },
   methods: {
     switchNav (key,path) {
-      this.$store.commit('ACTIVE_NAV',key);
+      //activeNav要在router的beforeEach中提交到mutation，在这里提交刷新了就没了
+      // this.$store.commit('ACTIVE_NAV',key);
       this.$router.push(path)
       
     }
@@ -68,6 +69,9 @@ export default {
   computed: {
     menu () {
       return nav[this.$store.getters.activeNav].child;
+    },
+    activeNav () {
+      return this.$store.getters.activeNav;
     }
   }
 }
