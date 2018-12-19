@@ -113,5 +113,24 @@ export default {
                 ]
             }
         ]
+    },
+    stores: {
+        title: '库存',
+        path: '/store/addStore',
+        child: [
+            {
+                sub: '库存记录',
+                menu: [
+                    {
+                        name: '商品入库',
+                        path: '/store/addStore'
+                    },
+                    {
+                        name: '商品出库',
+                        path: '/store/exportStore'
+                    }
+                ]
+            }
+        ]
     }
 }
