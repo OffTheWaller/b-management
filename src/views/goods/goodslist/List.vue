@@ -60,25 +60,26 @@
           <el-button @click="$router.push('/goods/add')">添加商品</el-button>
         </div>
       </div>
-      <el-table class="mall-table" :data="tableData" ref="table"
-      @selection-change="tableSelection" :header-cell-style="headerStyle" :cell-style="tdStyle"
-      >
-        <el-table-column type="selection" width="55" prop="id"></el-table-column>
-        <el-table-cloumn label="编号">
-          <template slot-scope="scope">{{scope.row.id}}</template>
-        </el-table-cloumn>
-        <el-table-column label="商品图片">
-          <template slot-scope="scope">
-            <img :src="getGoodImg(scope.row.goodsImg)" alt="">
-          </template>
-        </el-table-column>
+      <el-table :data="tableData" style="width: 100%" border>
+        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column label="编号"></el-table-column>
+        <el-table-column label="商品图片"></el-table-column>
+        <el-table-column label="商品名称"></el-table-column>
+        <el-table-column label="价格/货号"></el-table-column>
+        <el-table-column label="标签"></el-table-column>
+        <el-table-column label="排序"></el-table-column>
+        <el-table-column label="SKU库存"></el-table-column>
+        <el-table-column label="销量"></el-table-column>
+        <el-table-column label="审核状态"></el-table-column>
+        <el-table-column label="操作"></el-table-column>
       </el-table>
+      
     </div>
   </div>
 </template>
 
 <script>
-import axios from "@/utils/axios.js";
+// import axios from "@/utils/axios.js";
 export default {
   name: "List",
   data() {
@@ -86,7 +87,13 @@ export default {
       showSearch: false, //子搜索框展开
       goodsName: '',
       brandId: '',
-      tableData: [],
+      tableData: [{
+        date: '2014-5-7'
+      },{
+        date: '2014-5-7'
+      },{
+        date: '2014-5-7'
+      }]
 
     };
   },
