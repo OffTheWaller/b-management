@@ -49,6 +49,22 @@ export default new Router({
         {
           path: '/goods/evaluate',  //商品评价
           component: resolve => require(['@/views/goods/goodsevaluate/Evaluate'], resolve)
+        },
+        {
+          path: '/goods/category',  //商品分类
+          component: resolve => require(['@/views/goods/goodscategory/Category'], resolve)
+        },
+        {
+          path: '/goods/type',  //商品类型
+          component: resolve => require(['@/views/goods/goodstype/Type'], resolve)
+        },
+        {
+          path: '/goods/brand',  //品牌管理
+          component: resolve => require(['@/views/goods/goodsbrand/Brand'], resolve)
+        },
+        {
+          path: '/goods/image',  //品牌管理
+          component: resolve => require(['@/views/goods/goodsimage/Image'], resolve)
         }
       ]
     },

@@ -1,5 +1,5 @@
 <template>
-    <div>这是商品分类</div>
+    <div>这是商品类型</div>
 </template>
 
 <script>
