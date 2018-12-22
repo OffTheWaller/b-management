@@ -7,6 +7,7 @@ import 'styles/iconfont.css'
 
 
 import ElementUI from 'element-ui';
+import { Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
@@ -20,7 +21,7 @@ router.beforeEach((to, from, next) => {
     if (to.path == '/login') {
       next();
     } else {  // 不是登录页就提示登录失效
-      this.$message.error('登录失效');
+      Message.error('登录过期')
       router.replace('/')
     }
   } else {  // 如果有用户信息，就根据router获取activeNav

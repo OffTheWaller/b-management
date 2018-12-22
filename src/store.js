@@ -19,6 +19,11 @@ export default new Vuex.Store({
     SET_USERINFO (state, value) {
       state.userInfo = value;
       localStorage.setItem('userInfo',value);
+    },
+    LOGOUT (state) {
+      state.userInfo = '';
+      localStorage.removeItem('userInfo');
+      
     }
   },
   actions: {

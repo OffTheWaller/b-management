@@ -19,7 +19,15 @@
             @click="switchNav(key,item.path)"
             >{{item.title}}</el-menu-item>
           </el-menu>
-          <div class="user-info fr"></div>
+          <div class="user-info fr">
+            <div class="iconfont user-icon">&#xe626;</div>
+            <div class="user-name">{{userInfo.merchantName}}</div>
+            <div class="seperate"></div>
+            <div class="return-home iconfont" @click="goHome">&#xe627;</div>
+            <div class="tips-num">50</div>
+            <div class="iconfont tips">&#xe61a;</div>
+            <div class="logout iconfont" @click="logout">&#xeee3;</div>
+          </div>
         </div>
       </el-header>
       <el-container class="main-content">
@@ -55,15 +63,29 @@ export default {
   data () {
     return {
       nav: nav,
-      isRouter: true
+      isRouter: true,
+      userInfo: JSON.parse(localStorage.getItem('userInfo'))
     }
   },
   methods: {
     switchNav (key,path) {
       //activeNav要在router的beforeEach中提交到mutation，在这里提交刷新了就没了
       // this.$store.commit('ACTIVE_NAV',key);
-      this.$router.push(path)
-      
+      this.$router.push(path)  
+    },
+    goHome () {
+      this.$router.push('/index/systemIndex')
+    },
+    //退出登录
+    logout () {
+      this.$store.commit('LOGOUT');
+      this.$message({
+        message: '退出系统',
+        type: 'warning'
+      })
+      setTimeout(() => {
+        this.$router.push('/login');
+      },1000)
     }
   },
   computed: {
@@ -98,6 +120,44 @@ export default {
       height: 90px;
       line-height: 90px;
       text-align: center;
+    }
+    .user-info {
+      height: 90px;
+      position: relative;
+      >div {
+        float: left;
+        margin-left: 15px;
+        width: 33px;
+        height: 33px;
+        font-size: 33px;
+        color: #fff;
+        line-height: 90px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      .user-name {
+        width: 80px;
+        font-size: 16px;
+      }
+      .seperate {
+        width: 1px;
+        height: 33px;
+        background: #fff;
+        margin-top: 30px;
+      }
+      .tips-num {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background: red;
+        font-size: 12px;
+        line-height: 22px;
+        text-align: center;
+        border-radius: 11px;
+        top: 21px;
+        left: 221px;
+      }
     }
   }
   .main-content {
