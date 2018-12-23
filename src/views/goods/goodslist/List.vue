@@ -63,7 +63,7 @@
           <el-button @click="$router.push('/goods/add')">添加商品</el-button>
         </div>
       </div>
-      <el-table :data="tableData" style="width: 100%" border class="goods-table" :header-cell-style="headerStyle" :cell-style="tdStyle">
+      <el-table :data="tableData" style="width: 100%" border class="goods-table" ref="table" :header-cell-style="headerStyle" :cell-style="tdStyle">
         <el-table-column type="selection" width="55" prop="id"></el-table-column>
         <el-table-column label="编号" prop="id"></el-table-column>
         <el-table-column label="商品图片">
@@ -96,13 +96,14 @@
           </template>
         </el-table-column>
       </el-table>
-      
+      <pagination :total="total" :pageSize="pageSize" @next="next" @handleChangeAll="handleChangeAll" @batchConfirm="batchConfirm"></pagination>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "@/utils/axios.js";
+import Pagination from '@/components/Pagination'
 export default {
   name: "List",
   data() {
@@ -115,10 +116,13 @@ export default {
       brandList: [],  //品牌列表
       currentPage: 1,  //当前页
       pageSize: 10,  //每页显示条数
-      total: '',  //商品总数
+      total: 0,  //商品总数
       tableData: [] //商品数据
 
     };
+  },
+  components: {
+    Pagination
   },
   mounted () {
     //获取分类列表
@@ -199,6 +203,21 @@ export default {
         })
       }
 
+    },
+    //分页改变时
+    next (val) {
+      this.currentPage = val;
+      this.getGoodsList();
+    },
+    handleChangeAll (val) {
+      if (val) {
+        this.$refs.table.toggleAllSelection();
+      } else {
+        this.$refs.table.clearSelection();
+      }
+    },
+    batchConfirm (value) {
+      // console.log(value)  //显示传递类型
     },
     // 表头样式
     headerStyle(){

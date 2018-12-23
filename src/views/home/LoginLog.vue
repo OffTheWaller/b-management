@@ -11,52 +11,74 @@
             <div class="table-title">
                 数据列表
             </div>
-            <el-table :data="tableData" style="width: 100%" border>
-              <el-table-column label="时间" prop="time"></el-table-column>
+            <el-table :data="tableData" style="width: 100%" border :header-cell-style="headerStyle" :cell-style="tdStyle" class="my-table">
+              <el-table-column label="时间" prop="operateTime"></el-table-column>
               <el-table-column label="IP" prop="ip"></el-table-column>
-              <el-table-column label="地区" prop="site"></el-table-column>
-              <el-table-column label="浏览器" prop="browser"></el-table-column>
+              <el-table-column label="地区" prop="description"></el-table-column>
+              <el-table-column label="浏览器" prop="pack"></el-table-column>
             </el-table>
+            <pagination :showBatch="false" :total="total" @next="next"></pagination>
         </div>
     </div>
 </template>
 
 <script>
+import Pagination from '@/components/Pagination'
+import axios from '@/utils/axios.js'
 export default {
     name: 'LoginLog',
     data () {
       return {
-        tableData: [{
-          time: '2017-07-03 14:36:21',
-          ip: '183.14.15.113',
-          site: '广东省深圳市',
-          browser: 'Firefox 45'
-        },
-        {
-          time: '2017-07-03 14:36:21',
-          ip: '183.14.15.113',
-          site: '广东省深圳市',
-          browser: 'Firefox 45'
-        },
-        {
-          time: '2017-07-03 14:36:21',
-          ip: '183.14.15.113',
-          site: '广东省深圳市',
-          browser: 'Firefox 45'
-        },
-        {
-          time: '2017-07-03 14:36:21',
-          ip: '183.14.15.113',
-          site: '广东省深圳市',
-          browser: 'Firefox 45'
-        },
-        {
-          time: '2017-07-03 14:36:21',
-          ip: '183.14.15.113',
-          site: '广东省深圳市',
-          browser: 'Firefox 45'
-        }]
+        tableData: [],
+        currentPage: 1,
+        pageSize: 10,
+        total: 0
       }
+    },
+    components: {
+        Pagination
+    },
+    mounted () {
+        this.getList();
+    },
+    methods: {
+        getList () {
+            axios.post('/api/merchant/get_merchant_login_info_list',{
+                currentPage: this.currentPage,
+                pageSize: this.pageSize,
+                orderBy: 'operate_time desc'
+            },{type: 'form'}).then((res) => {                
+                res = res.data.data;
+                this.tableData = res.list;
+                this.total = res.totalPage;
+                // console.log(res)
+            })
+        },
+        next (val) {
+            this.currentPage = val;
+            this.getList();
+        },
+        // 表头样式
+        headerStyle(){
+          return {
+            color: '#595757',
+            background: '#F6F6F6',
+            fontSize: '15px',
+            borderLeft: '1px solid #b4b4b4',
+            borderTop: '1px solid #b4b4b4',
+            textAlign: 'center'
+          }
+        },
+        //表格样式
+        tdStyle(){
+          return {
+            color: '#595757',
+            fontSize: '15px',
+            borderLeft: '1px solid #b4b4b4',
+            borderTop: '1px solid #b4b4b4',
+            textAlign: 'center'
+          }
+        }
     }
 }
 </script>
@@ -95,13 +117,10 @@ export default {
     .main-content {
         width: 100%;
         padding: 34px;
+        .my-table {
+            border-right: 1px solid #b4b4b4;
+            border-bottom: 1px solid #b4b4b4;
+        }
         
     }
-    .main-content /deep/ th {
-          background: #F7F8F8;
-          text-align: center;
-          font-weight: 700;
-          color: #595757;
-          border: 1px solid #F7F8F8;
-        }
 </style>
