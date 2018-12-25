@@ -216,7 +216,7 @@ export default {
         this.$refs.table.clearSelection();
       }
     },
-    batchConfirm (value) {
+    batchConfirm () {
       // console.log(value)  //显示传递类型
     },
     // 表头样式
