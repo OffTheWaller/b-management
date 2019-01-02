@@ -104,7 +104,48 @@
       </div>
       <!-- 步骤三 -->
       <div v-if="stepActive == 2">
-        这是步骤三
+        <div class="product-property">
+          <div class="form-label">商品属性</div>
+          <div class="property-content">
+            <el-form label-width="100px">
+              <el-form-item  label="商品类型：" >
+                <el-select v-model="ruleForm.styleId" placeholder="请选择商品类型" @change="getProp">
+                  <el-option v-for="item in typeList" :key="item.id" :label="item.styleName" :value="item.id" ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="商品规格：">
+                <div class="prop-wrap">
+                  <el-checkbox-group v-model="checkProp" v-for="(item,index) in propList" :key="index">
+                    <div class="font-14">{{ item.name }}</div>
+                    <el-checkbox @change="handleCheckProp(prop,item.name,$event)" :label="item.name + prop" v-for="(prop,index) in item.value" :key="index">{{ prop }}</el-checkbox>
+                  </el-checkbox-group>
+                  <div>
+                    <el-button size="small" type="primary" @click="addProps">添加</el-button>
+                  </div>
+                </div>
+              </el-form-item>
+            </el-form>
+            <table>
+              <thead>
+                <td v-for="item in propHeader">{{item}}</td>
+                <td>销售价格</td>
+                <td>商品库存</td>
+                <td>库存预警值</td>
+              </thead>
+              <tbody>
+                <tr v-for="item in propSpecList">
+                  <td v-for="val in item.nameValue">{{val.value}}</td>
+                  <td><el-input v-model="item.goodsSalePrice" size="mini" type="number" :max="99999"></el-input></td>
+                  <td><el-input v-model="item.goodsStock" size="mini" type="number" :max="99999"></el-input></td>
+                  <td><el-input v-model="item.stockWarning" size="mini" type="number" :max="99999"></el-input></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="product-params">
+          <div class="form-label">商品参数</div>
+        </div>
       </div>
     </div>
   </div>
@@ -128,12 +169,14 @@ export default {
       }
     }
     return {
-      stepActive: 1,
+      stepActive: 2,
       categoryName: '', //一级分类名
       childCategoryName: '',  //二级分类名
       categoryList: [], //一级分类列表
       childCategoryList: [],//二级分类列表
       brandList: [],//品牌列表
+      typeList: [],//商品类型列表
+      propList: [],//属性列表
       ruleForm: {
         typeId: '',  //一级分类Id
         childId: '',  //二级分类Id
@@ -148,7 +191,14 @@ export default {
         goodsWarning: '',//商品预警值
         goodsUnit: '',//计量单位
         goodsWeight: '',//商品重量
-        
+        styleId: '',//商品类型
+        merchantSpecifications: [],
+        merchantGoodsTypePropertyList: [],
+        merchantParamDetailIds: {
+          merchantParamDetails: [],
+          mainMaterial: '',
+          paramObject: ''
+        }  
       },
       rules: {
         goodsName: [
@@ -174,10 +224,58 @@ export default {
         goodsWarning: [
           {required: true, message: '请输入库存预警值', trigger: 'blur'}
         ]
-      }
+      },
+      checkProp: [],//组件选中属性
+      checkPropList: [],//选中属性列表
+      propSpecList: [],//商品规格列表
+      propHeader: [],//商品表格头
+      paramsList: [], //参数列表
+
     };
   },
   methods: {
+    //选取属性
+    handleCheckProp (prop, name, $event) {
+      // prop--属性值，name--属性名，$event--选中状态(true,false)
+      if ($event) {
+        if (this.checkPropList.length == 0) {
+          this.checkPropList.push({
+            name: name,
+            value: [prop]
+          })
+        } else {
+          let isExist = false;
+          for (let i = 0; i< this.checkPropList.length; i++) {
+            if (this.checkPropList[i].name == name) {
+              this.checkPropList[i].value.push(prop);
+              isExist = true;
+              break;
+            }
+          }
+          if (!isExist) {
+            this.checkPropList.push({
+              name: name,
+              value: [prop]
+            })
+          }
+        }
+      } else {
+        for (let i = 0; i<this.checkPropList.length; i++) {
+          if (this.checkPropList[i].name == name) {
+            for (let j = 0; j<this.checkPropList[i].value.length; j++) {
+              if (this.checkPropList[i].value[j] == prop) {
+                this.checkPropList[i].value.splice(j,1);
+                if (this.checkPropList[i].value.length == 0) {
+                  this.checkPropList.splice(i,1)
+                }
+                return
+              }
+            }
+          }
+        }
+      }
+      
+    },
     //第一步提交
     submitStep1 () {
       if (!this.ruleForm.typeId) {
@@ -217,6 +315,125 @@ export default {
           return false;
         }
       })
+    },
+    //选择商品类型后获取属性值
+    getProp (val) {
+      this.checkProp = [];
+      this.checkPropList = [];
+      this.propHeader = [];
+      this.propSpecList = [];
+      axios.post('/api/merchantGoodsProperty/merchant_goods_property_list_page', {
+        styleId: val,
+        currentPage: 1,
+        pageSize: 100
+      }).then((res) => {
+        res = res.data.data;
+        let list = [];
+        res.list.map((item) => {
+          list.push({
+            name: item.propertyName,
+            value: item.propertyList.split(',')
+          })
+        })
+        this.propList = list;
+        axios.post('/api/merchantGoodsParam/merchant_goods_property_list_page',{
+          styleId: val,
+          currentPage: 1,
+          pageSize: 100
+        }).then((res) => {
+          let list = [];
+          let formList = [];
+          res = res.data.data;
+          res.list.map((item) => {
+            list.push({
+              name: item.paramName,
+              list: item.paramList.split(',')
+            });
+            formList.push({
+             paramDetailName: item.paramName,
+             specificationValue: ''
+            })
+          })
+          this.paramsList = list;
+          this.$set(this.ruleForm, 'merchantParamDetailIds', {
+            'merchantParamDetails': formList,
+            'mainMaterial': '',
+            'paramObject': ''
+          })
+          
+        })
+        
+
+      })
+    },
+    //添加属性
+    addProps () {
+      if (!this.ruleForm.styleId) {
+        this.$message({
+          message: '请选择商品类型',
+          type: 'error'
+        })
+        return
+      }
+      if (this.checkPropList.length == 0) {
+        this.$message({
+          message: '请选择商品属性',
+          type: 'error'
+        })
+        return
+      }
+      let propHeader = [];
+      let propArr = [];
+      this.checkPropList.map((item,index) => {
+        propHeader.push(item.name);
+        propArr[index] = [];
+        this.checkPropList[index].value.map((val) => {
+          propArr[index].push({
+            name: this.checkPropList[index].name,
+            value: val
+          })
+        })
+      })
+      this.propHeader = propHeader;
+      let propItem = sortAll(propArr);
+      this.propSpecList = [];
+      propItem.map((item) => {
+        this.propSpecList.push({
+          nameValue: item instanceof Array ? item : [item],
+          goodsSalePrice: '',
+          goodsStock: '',
+          stockWarning: '',
+          skuCode: ''
+        })
+      })
+      function sortAll(arr){
+          var len = arr.length;
+          if(len >= 2){
+            var len1 = arr[0].length;
+            var len2 = arr[1].length;
+            var lenBoth = len1 * len2;
+            var items = new Array(lenBoth);
+            var index = 0;
+            for(var i = 0; i<len1; i++){
+              for(var j = 0; j < len2; j++){
+                if (arr[0][i] instanceof Array){
+                  items[index] = [...arr[0][i],arr[1][j]];
+                }else {
+                  items[index] = [arr[0][i],arr[1][j]];
+                }
+                index++;
+              }
+            }
+            var newArr = new Array(len - 1);
+            for(var i = 2; i < arr.length; i++){
+              newArr[i-1] = arr[i];
+            }
+            newArr[0] = items;
+            return sortAll(newArr);
+          }else{
+            return arr[0]
+          }
+        }
     }
   },
   mounted () {
@@ -226,6 +443,13 @@ export default {
       axios.post('/api/merchant_goods_brand/query_list').then((res) => {//获取品牌
         res = res.data.data;
         this.brandList = res;
+        axios.post('/api/merchantGoodsStyle/merchant_goods_style_list_page', {//获取商品类型
+          currentPage: 1,
+          pageSize: 100
+        }).then((res) => {
+          res = res.data.data;
+          this.typeList = res.list;
+        })
       })
     })
   }
@@ -358,6 +582,14 @@ export default {
     .step2-tips {
       font-size: 14px;
       line-height: 20px;
+    }
+  }
+  // 步骤三商品属性
+  .product-property {
+    display: flex;
+    .property-content {
+      margin-left: 100px;
+      margin-top: 20px;
     }
   }
 }
