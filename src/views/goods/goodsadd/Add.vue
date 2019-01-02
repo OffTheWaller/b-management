@@ -113,7 +113,7 @@
                   <el-option v-for="item in typeList" :key="item.id" :label="item.styleName" :value="item.id" ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="商品规格：">
+              <el-form-item label="商品规格：" v-if="propList.length > 0">
                 <div class="prop-wrap">
                   <el-checkbox-group v-model="checkProp" v-for="(item,index) in propList" :key="index">
                     <div class="font-14">{{ item.name }}</div>
@@ -125,16 +125,16 @@
                 </div>
               </el-form-item>
             </el-form>
-            <table>
+            <table class="property-table" v-show="propSpecList.length > 0">
               <thead>
-                <td v-for="item in propHeader">{{item}}</td>
+                <td v-for="(item,index) in propHeader" :key="index">{{item}}</td>
                 <td>销售价格</td>
                 <td>商品库存</td>
                 <td>库存预警值</td>
               </thead>
               <tbody>
-                <tr v-for="item in propSpecList">
-                  <td v-for="val in item.nameValue">{{val.value}}</td>
+                <tr v-for="(item,index) in propSpecList" :key="index">
+                  <td v-for="(val,index) in item.nameValue" :key="index">{{val.value}}</td>
                   <td><el-input v-model="item.goodsSalePrice" size="mini" type="number" :max="99999"></el-input></td>
                   <td><el-input v-model="item.goodsStock" size="mini" type="number" :max="99999"></el-input></td>
                   <td><el-input v-model="item.stockWarning" size="mini" type="number" :max="99999"></el-input></td>
@@ -145,6 +145,30 @@
         </div>
         <div class="product-params">
           <div class="form-label">商品参数</div>
+          <table class="goods-table">
+            <thead>
+              <td>参数类型</td>
+              <td>录入参数</td>
+            </thead>
+            <tbody>
+              <tr v-for="(item,index) in paramsList">
+                <td>{{item.name || item.paramDetailName}}</td>
+                <td>
+                  <el-select v-model="ruleForm.merchantParamDetailIds.merchantParamDetails[index].specificationsValue" placeholder="请选择商品参数值">
+                    <el-option :label="val" :value="val" v-for="val in item.list"></el-option>
+                  </el-select>
+                </td>
+              </tr>
+              <tr>
+                <td>主材含量</td>
+                <td><el-input v-model="ruleForm.merchantParamDetailIds.mainMaterial" size="mini"></el-input></td>
+              </tr>
+              <tr>
+                <td>适用对象</td>
+                <td><el-input v-model="ruleForm.merchantParamDetailIds.paramObject" size="mini"></el-input></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -590,7 +614,23 @@ export default {
     .property-content {
       margin-left: 100px;
       margin-top: 20px;
+      .property-table {
+        td {
+          border: 1px solid #ccc;
+          padding: 5px;
+        }
+      }
+      
     }
+  }
+  .product-params {
+    display: flex;
+    .goods-table {
+        td {
+          border: 1px solid #ccc;
+          padding: 10px;
+        }
+      }
   }
 }
 </style>
