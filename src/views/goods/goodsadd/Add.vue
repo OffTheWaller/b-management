@@ -170,6 +170,19 @@
             </tbody>
           </table>
         </div>
+        <div class="product-photos">
+          <div class="form-label">商品相册</div>
+          <div class="upload-btn-wrap">
+            <label for="upload"><el-button type="primary">上传图片</el-button></label>
+            <input @change="uploadGoodImg" type="file" id="upload" accept="image/jpeg,image/png" class="upload-input large">
+            <p>最多可以上传5张图片，建议尺寸800*800px</p>
+          </div>
+        </div>
+        <div>
+          <div class="form-label">商品详情</div>
+          <el-button @click="stepActive = 1">上一步，填写商品信息</el-button>
+          <el-button type="primary" @click="submitGood">下一步，选择商品类目</el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -193,7 +206,7 @@ export default {
       }
     }
     return {
-      stepActive: 2,
+      stepActive: 0,
       categoryName: '', //一级分类名
       childCategoryName: '',  //二级分类名
       categoryList: [], //一级分类列表
@@ -222,7 +235,8 @@ export default {
           merchantParamDetails: [],
           mainMaterial: '',
           paramObject: ''
-        }  
+        },
+        goodsImg: ''//商品图片 
       },
       rules: {
         goodsName: [
@@ -254,10 +268,79 @@ export default {
       propSpecList: [],//商品规格列表
       propHeader: [],//商品表格头
       paramsList: [], //参数列表
+      imgList: []//图片列表
 
     };
   },
   methods: {
+    // 提交商品
+    submitGood () {
+      let formData = JSON.parse(JSON.stringify(this.ruleForm));
+      formData.goodsImg = this.imgList.join(',');
+      formData.merchantSpecifications = this.checkPropList;
+      formData.merchantGoodsTypePropertyList = this.propSpecList;
+      console.log(formData)
+      axios.post('/api/merchantGoods/merchant_goods_add',formData).then(() => {
+        this.$message({
+          message: '添加商品成功',
+          type: 'success'
+        })
+        setTimeout(() => {
+          this.$router.push('/goods/list');
+
+        },500)
+      },(err) => {
+        console.log('添加商品失败')
+        this.$message(err.msg)
+      })
+
+
+    },
+    //上传图片
+    uploadGoodImg (file) {
+      let files = file.target.files;
+      // console.log(files)
+      let imgUrl = this.imgList;
+      let promiseList = [];
+      for (let i=0; i<files.length;i++) {
+        if (files[i] == []) {
+          continue;
+        }
+        promiseList.push(this.uploadFiles(files[i]))
+      }
+      Promise.all(promiseList).then((res) => {
+        
+        res.map((item) => {
+          imgUrl.push(item.imgUrl)
+        })
+        
+        
+      },() => {
+        this.$message({
+          message: '上传失败',
+          type: 'error'
+        })
+      })
+    },
+    uploadFiles (file) {
+      return new Promise((resolve, reject) => {
+        let formData = new FormData();
+        formData.append('file',file);
+        console.log(formData)
+        axios.post('/api/merchant/upload_file',formData,{
+          type: 'form',
+          file: 'image'
+        }).then((res) => {
+          // console.log(res)
+          resolve({
+            imgUrl: res.imgUrl + res.image
+          },(error) => {
+            this.$message(error);
+            reject(error);
+          })
+        })
+      })
+    },
     //选取属性
     handleCheckProp (prop, name, $event) {
       // prop--属性值，name--属性名，$event--选中状态(true,false)
@@ -541,7 +624,6 @@ export default {
   // 步骤一盒子
   .select-category-1 {
     width: 880px;
-    min-height: 500px;
     // background: pink;
     margin-left: 250px;
     margin-top: -25px;
@@ -551,7 +633,6 @@ export default {
       justify-content: space-between;
       .select-box-form {
         width: 380px;
-        height: 426px;
         border: 1px solid #b4b4b4;
         li {
           font-size: 16px;
@@ -624,6 +705,7 @@ export default {
     }
   }
   .product-params {
+    margin-top: 10px;
     display: flex;
     .goods-table {
         td {
@@ -631,6 +713,23 @@ export default {
           padding: 10px;
         }
       }
+  }
+  .product-photos {
+    margin-top: 10px;
+    display: flex;
+    .upload-btn-wrap {
+      margin-top: 20px;
+      position: relative;
+      .upload-input {
+        width: 98px;
+        height: 40px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
