@@ -151,11 +151,11 @@
               <td>录入参数</td>
             </thead>
             <tbody>
-              <tr v-for="(item,index) in paramsList">
+              <tr v-for="(item,index) in paramsList" :key="index">
                 <td>{{item.name || item.paramDetailName}}</td>
                 <td>
                   <el-select v-model="ruleForm.merchantParamDetailIds.merchantParamDetails[index].specificationsValue" placeholder="请选择商品参数值">
-                    <el-option :label="val" :value="val" v-for="val in item.list"></el-option>
+                    <el-option :label="val" :value="val" v-for="(val,index) in item.list" :key="index"></el-option>
                   </el-select>
                 </td>
               </tr>
@@ -532,7 +532,7 @@ export default {
               }
             }
             var newArr = new Array(len - 1);
-            for(var i = 2; i < arr.length; i++){
+            for(let i = 2; i < arr.length; i++){
               newArr[i-1] = arr[i];
             }
             newArr[0] = items;

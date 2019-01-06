@@ -55,6 +55,10 @@ export default new Router({
           component: resolve => require(['@/views/goods/goodscategory/Category'], resolve)
         },
         {
+          path: '/goods/addcategory',  //添加分类
+          component: resolve => require(['@/views/goods/goodscategory/AddCategory'], resolve)
+        },
+        {
           path: '/goods/type',  //商品类型
           component: resolve => require(['@/views/goods/goodstype/Type'], resolve)
         },

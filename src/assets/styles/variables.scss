@@ -1,6 +1,7 @@
 $theme-color: #5bc0bf;
 $side-bar: #efefef;
 $my-red: #d23029;
+$gray: #5a5a5a;
 .my-active {
   color: $theme-color;
 }
@@ -23,4 +24,56 @@ $my-red: #d23029;
   border-bottom-color: transparent;
   display: flex;
   justify-content: space-between
+}
+
+//表格标题
+.box-title {
+  line-height: 60px;
+  color: #5a5a5a;
+  font-weight: bold;
+  font-size: 22px;
+  background-color: #efefef;
+  text-align: left;
+  padding: 0 20px;
+  border: 1px solid #b4b4b4;
+  border-bottom-color: transparent;
+}
+
+.mall-table {
+  border-right: 1px solid #b4b4b4;
+  border-bottom: 1px solid #b4b4b4;
+}
+
+.table-btn {
+  color: $theme-color;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+//上传图片按钮
+.upload-btn-wrap {
+  position: relative;
+}
+
+.upload-input {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 80px;
+  height: 32px;
+  opacity: 0;
+  z-index: 99;
+  cursor: pointer;
+}
+.form-img {
+  width: 150px;
+  display: block;
+  margin-bottom: 10px;
 }
