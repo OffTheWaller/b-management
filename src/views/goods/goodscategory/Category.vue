@@ -56,8 +56,8 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <span class="table-btn">编辑</span>
-            <span class="table-btn">删除</span>
+            <span class="table-btn" @click="$router.push('/goods/addcategory?id=' + scope.row.id)">编辑</span>
+            <span class="table-btn" @click="remove(scope.row.id)">删除</span>
           </template>
         </el-table-column>
       </el-table>
@@ -88,6 +88,19 @@ export default {
     this.getList();
   },
   methods: {
+    remove (id) {
+      this.$confirm('确认删除吗？').then(() => {
+        axios.post('/api/merchantGoodsType/merchant_goods_type_delete', {
+          id: id
+        }).then(() => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          });
+          this.getList();
+        })
+      })
+    },
     getList() {
       var parentId = 0;
       axios

@@ -81,7 +81,31 @@ export default {
     axios.post('/api/merchantGoodsType/query_goods_type_tree').then((res) => {
       res = res.data.data;
       this.categoryList = [...this.categoryList, ...res];
-      // console.log(this.categoryList)
+      //判断路由的url中是否有参数，如果有参数就是编辑页面，如果没有就是添加页面
+      if (this.$route.query.id) {
+        this.isAdd = false;
+        this.loading = true;
+        //根据id查询商品分类信息
+        axios.post('/api/merchantGoodsType/merchant_goods_type_by_id', {
+          id: this.$route.query.id
+        }).then((res) => {
+          res = res.data.data;
+          this.$set(this.ruleForm, 'typeName', res.typeName);
+          this.$set(this.ruleForm, 'parentId', res.parentId);
+          this.$set(this.ruleForm, 'goodsUnit', res.goodsUnit);
+          this.$set(this.ruleForm, 'goodsSort', res.goodsSort);
+          this.$set(this.ruleForm, 'showStatus', res.showStatus);
+          this.$set(this.ruleForm, 'typeIcon', res.typeIcon);
+        }, (err) => {
+          this.$message({
+            message: err.msg,
+            type: 'error'
+          });
+        }).finally(() => {
+          this.loading = false;
+        })
+      }
+      
     })
   },
   methods: {
@@ -119,12 +143,40 @@ export default {
       })
     },
     //提交表单
-    submitForm () {
-
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          //添加商品分类提交
+          if (this.isAdd) {
+            this.addEidt('/api/merchantGoodsType/merchant_add_goods_type')
+          } else {
+            //编辑商品分类提交
+            this.ruleForm.id = this.$route.query.id;
+            this.addEidt('/api/merchantGoodsType/merchant_goods_type_update')
+          }
+        }
+      })
+    },
+    // 提交商品分类数据
+    addEidt (url) {
+      axios.post(url, this.ruleForm).then(() => {
+        this.$message({
+          message: '操作成功',
+          type: 'success'
+        });
+        setTimeout(() => {
+          this.$router.push('/goods/category')
+        },1000)
+      }, (err) => {
+        this.$message({
+          message: err.msg,
+          type: 'error'
+        })
+      })
     },
     //返回
     back () {
-
+      this.$router.go(-1)
     }
   }
 }

@@ -1,13 +1,12 @@
 export default {
   data () {
     return {
-      //表格读取
-      loading: true,
+      loading: true,//表格读取
       currentPage: 1,
       pageSize: 10,
       pageCount: 0,
-      total: 0
-
+      total: 0,
+      isAdd: true //s
     }
   },
   methods: {
