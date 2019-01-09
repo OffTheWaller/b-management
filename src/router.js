@@ -67,7 +67,7 @@ export default new Router({
           component: resolve => require(['@/views/goods/goodsbrand/Brand'], resolve)
         },
         {
-          path: '/goods/image',  //品牌管理
+          path: '/goods/image',  //图片库管理
           component: resolve => require(['@/views/goods/goodsimage/Image'], resolve)
         }
       ]

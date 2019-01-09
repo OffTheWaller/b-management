@@ -231,7 +231,7 @@ export default {
     }
     .main-content {
         padding: 44px;
-        width: 1374px;
+        width: 100%;
         box-sizing: border-box;
         // 四个卡片
         .cards {

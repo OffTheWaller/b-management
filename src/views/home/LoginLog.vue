@@ -115,7 +115,7 @@ export default {
         }
     }    
     .main-content {
-        width: 100%;
+        width: 90%;
         padding: 34px;
         .my-table {
             border-right: 1px solid #b4b4b4;

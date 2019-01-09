@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="add-goods">
     <!-- 内容标题区域 -->
     <div class="main-title">
       <div class="greenbar fl"></div>
@@ -565,6 +565,7 @@ export default {
 
 <style lang="scss">
 @import "~@/assets/styles/variables.scss";
+
 .main-title {
   height: 60px;
   background: $side-bar;
@@ -595,7 +596,7 @@ export default {
   }
 }
 .content {
-  width: 1374px;
+  width: 90%;
   padding: 20px;
   // 表单标题
   .form-label {
