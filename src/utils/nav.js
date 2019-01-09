@@ -114,6 +114,34 @@ export default {
             }
         ]
     },
+    promotes: {
+      title: '促销',
+      path: '/promotes/promotesList',
+      child: [
+          {
+              sub: '头部类目',
+              menu: [
+                  {
+                      name: '头部列表',
+                      path: '/promotes/promotesList'
+                  },
+                  {
+                      name: '添加头部',
+                      path: '/promotes/addHeader'
+                  }
+              ]
+          },
+          {
+              sub: '拼团管理',
+              menu: [
+                  {
+                      name: '订单管理',
+                      path: '/promotes/orderManage'
+                  }
+              ]
+          }
+      ]  
+    },
     stores: {
         title: '库存',
         path: '/store/addStore',
@@ -128,6 +156,74 @@ export default {
                     {
                         name: '商品出库',
                         path: '/store/exportStore'
+                    }
+                ]
+            }
+        ]
+    },
+    users: {
+        title: '用户',
+        path: '/users/usersList',
+        child: [
+            {
+                sub: '用户管理',
+                menu: [
+                    {
+                        name: '用户列表',
+                        path: '/users/usersList'
+                    }
+                ]
+            }
+        ]
+    },
+    operate: {
+        title: '运营',
+        path: '/operate/adList',
+        child: [
+            {
+                sub: '广告管理',
+                menu: [
+                    {
+                        name: '广告列表',
+                        path: '/operate/adList'
+                    },
+                    {
+                        name: '添加广告',
+                        path: '/operate/addAdvertise'
+                    }
+                ]
+            }
+        ]
+    },
+    setup: {
+        title: '设置',
+        path: '/setup/paySetup',
+        child: [
+            {
+                sub: '基础设置',
+                menu: [
+                    {
+                        name: '支付设置',
+                        path: '/setup/paySetup'
+                    },
+                    {
+                        name: '退款证书',
+                        path: '/setup/refund'
+                    }
+                ]
+            }
+        ]
+    },
+    authority: {
+        title: '权限',
+        path: '/authority/operationLogs',
+        child: [
+            {
+                sub: '权限',
+                menu: [
+                    {
+                        name: '操作日志',
+                        path: '/authority/operationLogs'
                     }
                 ]
             }
