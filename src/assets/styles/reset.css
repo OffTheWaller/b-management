@@ -161,3 +161,6 @@ a:hover {
 .el-tag .el-icon-close {
   color: #fff !important;
 }
+.margin-b {
+  margin-bottom: 20px;
+}

@@ -10,6 +10,11 @@ export default {
     }
   },
   methods: {
+    //分页下一页
+    next ($event) {
+      this.currentPage = $event;
+      this.getList();
+    },
     //上传图片
     uploadFile (file) {
       return new Promise((resolve,reject) => {
