@@ -39,7 +39,6 @@
             <i class="el-icon-arrow-up"></i>收起筛选
           </span>
           <el-button type="default">查询结果</el-button>
-          <el-button type="default" class="higher">高级检索</el-button>
         </div>
         <!-- 搜索框下半部分 -->
         <transition name="sub-menu">
@@ -281,7 +280,7 @@ export default {
 }
 // 搜索框
 .list-search {
-  width: 1309px;
+  width: 100%;
   height: 114px;
   margin-bottom: 20px;
   // 搜索上半部分

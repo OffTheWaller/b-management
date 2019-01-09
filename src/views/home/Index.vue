@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <el-container>
+      <!-- 顶部导航 -->
       <el-header class="nav" height="90px">
-        <!-- 顶部导航 -->
         <div class="nav-wrapper">
           <div class="logo fl">LOGO</div>
           <el-menu
@@ -106,7 +106,7 @@ export default {
     background: $theme-color;
   }
   .nav-wrapper {
-    width: 1634px;
+    width: 100%;
     margin: 0 auto;
     .logo {
       width: 180px;
@@ -161,7 +161,7 @@ export default {
     }
   }
   .main-content {
-    width: 1634px;
+    width: 100%;
     margin: 0 auto;
     .el-aside {
       width: 260px !important;
