@@ -20,6 +20,6 @@ module.exports = {
         }
       }
     },
-    port: 9527
+    port: 5050
   }
 }

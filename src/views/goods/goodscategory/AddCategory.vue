@@ -117,22 +117,22 @@ export default {
           var formData = new FormData();
           formData.append('username', '1223')
           // console.log(formData)
-          // axios.post('/api/merchant/upload_file', formData, {
-          //   type: 'form',
-          //   file: 'image'
-          // }).then((res) => {
+          axios.post('/api/merchant/upload_file', formData, {
+            type: 'form',
+            file: 'image'
+          }).then((res) => {
             
-          //   console.log(res)
-          //   resolve({
-          //     imgUrl: res.imgUrl + res.image
-          //   });
-          // }, (err) => {
-          //   this.$message({
-          //     message: err.msg,
-          //     type: 'error'
-          //   });
-          //   reject(err);
-          // })
+            console.log(res)
+            resolve({
+              imgUrl: res.imgUrl + res.image
+            });
+          }, (err) => {
+            this.$message({
+              message: err.msg,
+              type: 'error'
+            });
+            reject(err);
+          })
         }
       })
     },
