@@ -73,6 +73,10 @@ export default new Router({
         {
           path: '/goods/image',  //图片库管理
           component: resolve => require(['@/views/goods/goodsimage/Image'], resolve)
+        },
+        {
+          path: '/users/usersList',  //用户列表
+          component: resolve => require(['@/views/users/UserList'], resolve)
         }
       ]
     },

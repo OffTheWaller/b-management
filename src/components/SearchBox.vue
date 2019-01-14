@@ -12,8 +12,7 @@
       </div>
     </div>
     <div class="search-bottom flex h-center font-14 gray" v-show="showSearch">
-      <div>输入搜索：</div>
-      <el-input clearable v-model="searchContent" class="search-input"></el-input>
+      <slot name="search-content"></slot>
     </div>
   </div>
 </template>
