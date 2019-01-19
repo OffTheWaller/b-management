@@ -181,7 +181,41 @@
         <div>
           <div class="form-label">商品详情</div>
           <el-button @click="stepActive = 1">上一步，填写商品信息</el-button>
-          <el-button type="primary" @click="submitGood">下一步，选择商品类目</el-button>
+          <el-button type="primary" @click="stepActive = 3">下一步，选择商品类目</el-button>
+        </div>
+      </div>
+      <!-- 步骤4 -->
+      <div v-if="stepActive == 3">
+        <div class="form-label">关联类目</div>
+        <div class="select-category-1">
+          <!-- 选择菜单 -->
+          <div class="select-box">
+            <div class="select-box-form">
+              <div class="select-title">选择一级类目</div>
+              <ul>
+                <li :class="ruleForm.typeId == item.id? 'active' : ''" v-for="item in headerList" :key="item.id" @click="getCategory(item)"><span>{{item.typeName}}</span><span>></span></li>
+              </ul>
+            </div>
+            <div class="select-box-center">
+              <img src="@/assets/images/icon-arrow.png" alt="">
+            </div>
+            <div class="select-box-form">
+              <div class="select-title">选择二级类目</div>
+              <ul>
+                <li :class="ruleForm.childId == item.id? 'active': ''" v-for="item in childCategoryList" :key="item.id" @click="getChildCategory(item)"><span>{{item.typeName}}</span><span>></span></li>
+              </ul>
+            </div>
+          </div>
+          <!-- 当前选择 -->
+          <div class="now-choose">
+            <p>
+              您当前选择的商品类别是：
+              <span>{{categoryName || '未选择'}}  </span>
+              <span v-show="childCategoryName">>  {{childCategoryName || '未选择'}}</span>
+            </p>
+          </div>
+          <el-button type="default" @click="stepActive = 2">上一步，填写商品属性</el-button>
+          <el-button type="primary" class="next-step" @click="submitGood">提交商品</el-button>
         </div>
       </div>
     </div>
@@ -268,7 +302,10 @@ export default {
       propSpecList: [],//商品规格列表
       propHeader: [],//商品表格头
       paramsList: [], //参数列表
-      imgList: []//图片列表
+      imgList: [],//图片列表
+      headerList: [], //一级类目
+      childHeaderList: [], //二级类目
+      newFormData: {}
 
     };
   },
@@ -326,7 +363,7 @@ export default {
       return new Promise((resolve, reject) => {
         let formData = new FormData();
         formData.append('file',file);
-        console.log(formData)
+        // console.log(formData)
         axios.post('/api/merchant/upload_file',formData,{
           type: 'form',
           file: 'image'
@@ -556,6 +593,10 @@ export default {
         }).then((res) => {
           res = res.data.data;
           this.typeList = res.list;
+          axios.post('/api/merchantNavigation/query_navigation_type_tree').then((res) => {
+            res = res.data.data;
+            this.headerList = res;
+          })
         })
       })
     })

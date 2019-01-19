@@ -53,6 +53,7 @@ import mixin from "@/utils/mixin";
 import axios from "@/utils/axios.js";
 export default {
   name: "AddCategory",
+  mixins: [mixin],
   data() {
     return {
       isAddCategory: false,
@@ -63,7 +64,7 @@ export default {
         goodsUnit: '',
         goodsSort: '',
         showStatus: '1',
-        typeIcon: ''
+        typeIcon: ''//分类图片
       },
       rules: {
         typeName: [
@@ -73,7 +74,7 @@ export default {
       }
     };
   },
-  mixins: [mixin],
+  
   components: {
     subTitle
   },
@@ -109,22 +110,20 @@ export default {
     })
   },
   methods: {
+    //上传单张图片
+    //上传单张图片
     uploadFile (file) {
       return new Promise((resolve,reject) => {
-        
         if (file.target.files.length > 0) {
-          console.log('hello world')
-          var formData = new FormData();
-          formData.append('username', '1223')
-          // console.log(formData)
+          let formData = new FormData();
+          formData.append('file', file.target.files[0]);
           axios.post('/api/merchant/upload_file', formData, {
             type: 'form',
             file: 'image'
           }).then((res) => {
-            
-            console.log(res)
+            res = res.data.data;
             resolve({
-              imgUrl: res.imgUrl + res.image
+              imgUrl: res.imgUrl +res.image
             });
           }, (err) => {
             this.$message({

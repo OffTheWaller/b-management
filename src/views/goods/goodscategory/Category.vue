@@ -50,7 +50,7 @@
         <el-table-column label="设置" width="260">
           <template slot-scope="scope">
             <span class="table-btn">转移商品</span>
-            <span class="table-btn">新增下级</span>
+            <span class="table-btn" @click="$router.push('/goods/addCategory?parentId=' + scope.row.id)">新增下级</span>
             <span class="table-btn">查看下级</span>
           </template>
         </el-table-column>
