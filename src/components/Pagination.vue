@@ -69,13 +69,16 @@ export default {
     background: #efefef;
     border: 1px solid #b4b4b4;
     border-top: none;
-    display: flex;
-    justify-content: space-between;
-    .batch-select {
-      margin: 0 20px;
+    .batch-wrap {
+      float: left;
+      .batch-select {
+        margin: 0 20px;
+      }
     }
+    
     .mypagination {
       margin-top: 6px;
+      float: right;
     }
   }
 </style>

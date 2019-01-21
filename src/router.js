@@ -77,6 +77,10 @@ export default new Router({
         {
           path: '/users/usersList',  //用户列表
           component: resolve => require(['@/views/users/UserList'], resolve)
+        },
+        {
+          path: '/authority/operationLogs',  //权限-->操作日志
+          component: resolve => require(['@/views/authority/Authority'], resolve)
         }
       ]
     },
